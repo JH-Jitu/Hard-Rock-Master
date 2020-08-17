@@ -168,18 +168,13 @@
                 <div  class="single-result row align-items-center my-3 p-3">
                     <div  class="col-md-12">
                         <h3 class="lyrics-name">Search Results</h3>
-                        <!-- <p class="author lead">Album by <span >Washed Out</span></p> -->
-                    </div>
-                    <!-- <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success">Get Lyrics</button> -->
-                    
+                    </div>                    
                 </div></div>
                 <!-- ./ single result -->
-
             </div>
 </main>
 </div>
-
+    
 
         
 
@@ -190,17 +185,17 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
     <!-- Custom Script Here -->
+
 <script>
-    
+    // Setting variable
     let inputSong = document.getElementById("inputSong")
     let searchResults = document.getElementById("searchResults")
     let searchBtn = document.getElementById("searchBtn")
 
     const apiUrl = `https://api.lyrics.ovh`
-
     
-    searchBtn.addEventListener("click", function(){
-        
+    //Searching Part 
+    searchBtn.addEventListener("click", function(){        
         fetch(`${apiUrl}/suggest/${inputSong.value}`)
         .then(res => res.json())
         .then(data =>{            
@@ -211,21 +206,22 @@
                     artistName: element.artist.name,
                     songName:  element.title,
                     albumName: element.album.title,
-                    albumCover: element.album.cover
+                    albumCover: element.album.cover,
+                    songTrailer: element.preview
                 }
         
-                // console.log(artistName)
+                // console.log(item) => To see the item on Console
                     list.push(item)
                 
-            }
-        
+            }        
             
         console.log(list)
         console.log(data)
-    
+        
+        // After Searching Part
         let displayResult = document.getElementById('displayResult')
         for (let i = 0; i < 10; i++) {
-            const {songName, artistName, albumName, albumCover} = list[i];
+            const {songName, artistName, albumName, albumCover, songTrailer} = list[i];
             let displayResult = document.getElementById('displayResult')
                 displayResult.style.display = "block"
                 document.getElementById("displayResult").innerHTML += 
@@ -239,6 +235,9 @@
                     <h3 class="lyrics-name">${songName}</h3>
                     <p class="author lead">Album by <span id="artistName">${artistName}</span></p>
                     <p class="author lead">Album Name: <span id="artistName">${albumName}</span></p>
+                    <audio controls>
+        <source src="${songTrailer}" type="audio/mp3"> 
+    </audio>
                 </div>
                 
                 <div class="col-md-3 text-md-right text-center">
@@ -247,13 +246,12 @@
                 </div>
                 </div>`
         }  
-            
-          
+                      
         })
         .catch(err => consol.log(err))
-
         
     })
+// GET Lyrics Clicking Part
     displayResult.addEventListener('click', e=>{
     const clickedElement = e.target;
 
@@ -267,7 +265,8 @@
     }
     })
 
-// Get lyrics for song
+
+// Lyrics Part
 async function getLyrics(dataArtist, dataSongTitle, dataAlbum, dataCover) {
     const res = await fetch(`${apiUrl}/v1/${dataArtist}/${dataSongTitle}/`);
     const data = await res.json();
