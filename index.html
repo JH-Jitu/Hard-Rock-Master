@@ -203,10 +203,13 @@
             var list = [];
             for (let i = 0; i < 10; i++) {
                 const element = data.data[i];
-                    var artistName = element.artist.name;
-                    var songName = element.title;
+                const item = {
+                    artistName: element.artist.name,
+                    songName:  element.title
+                }
+
                 // console.log(artistName)
-                    list.push(artistName)
+                    list.push(item)
                 
             }
         
@@ -214,7 +217,7 @@
     
         let displayResult = document.getElementById('displayResult')
         for (let i = 0; i < 10; i++) {
-            var artistName = list[i];
+            const {songName, artistName} = list[i];
             let displayResult = document.getElementById('displayResult')
                 displayResult.style.display = "block"
                 document.getElementById("displayResult").innerHTML += 
