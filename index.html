@@ -206,12 +206,11 @@
                     artistName: element.artist.name,
                     songName:  element.title,
                     albumName: element.album.title,
-                    albumCover: element.album.cover,
-                    songTrailer: element.preview
+                    albumCover: element.album.cover
                 }
         
                 // console.log(item) => To see the item on Console
-                    list.push(item)
+                    list.push(item);
                 
             }        
             
@@ -219,10 +218,10 @@
         console.log(data)
         
         // After Searching Part
-        let displayResult = document.getElementById('displayResult')
+        let displayResult = document.getElementById('displayResult');
         for (let i = 0; i < 10; i++) {
-            const {songName, artistName, albumName, albumCover, songTrailer} = list[i];
-            let displayResult = document.getElementById('displayResult')
+            const {songName, artistName, albumName, albumCover} = list[i];
+            let displayResult = document.getElementById('displayResult');
                 displayResult.style.display = "block"
                 document.getElementById("displayResult").innerHTML += 
                 `<div  class="search-result col-md-8 mx-auto py-4">
@@ -235,9 +234,6 @@
                     <h3 class="lyrics-name">${songName}</h3>
                     <p class="author lead">Album by <span id="artistName">${artistName}</span></p>
                     <p class="author lead">Album Name: <span id="artistName">${albumName}</span></p>
-                    <audio controls>
-        <source src="${songTrailer}" type="audio/mp3"> 
-    </audio>
                 </div>
                 
                 <div class="col-md-3 text-md-right text-center">
