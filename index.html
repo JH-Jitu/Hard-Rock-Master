@@ -196,11 +196,11 @@
     let searchResults = document.getElementById("searchResults")
     let searchBtn = document.getElementById("searchBtn")
 
-    const apiUrl = `https://api.lyrics.ovh/suggest`
+    const apiUrl = `https://api.lyrics.ovh`
 
     
     searchBtn.addEventListener("click", function(){
-        fetch(`${apiUrl}/${inputSong.value}`)
+        fetch(`${apiUrl}/suggest/${inputSong.value}`)
         .then(res => res.json())
         .then(data =>{
             var list = [];
@@ -240,7 +240,7 @@
                 </div>
                 
                 <div class="col-md-3 text-md-right text-center">
-                    <button class="btn btn-success">Get Lyrics</button>
+                    <button class="btn btn-success" data-artist='${artistName}' data-songTitle='${songName}' data-album='${albumName}' data-cover='${albumCover}'>Get Lyrics</button>
                 </div>
                 </div>
                 </div>`
@@ -252,7 +252,46 @@
 
         
     })
-    
+    displayResult.addEventListener('click', e=>{
+    const clickedElement = e.target;
+
+    if (clickedElement.tagName === 'BUTTON'){
+        const dataArtist = clickedElement.getAttribute('data-artist');
+        const dataSongTitle = clickedElement.getAttribute('data-songTitle');
+        const dataAlbum = clickedElement.getAttribute('data-album');
+        const dataCover = clickedElement.getAttribute('data-cover');
+        
+        getLyrics(dataArtist, dataSongTitle, dataAlbum, dataCover)
+    }
+    })
+
+// Get lyrics for song
+async function getLyrics(dataArtist, dataSongTitle, dataAlbum, dataCover) {
+    const res = await fetch(`${apiUrl}/v1/${dataArtist}/${dataSongTitle}/`);
+    const data = await res.json();
+  
+    const lyrics = data.lyrics.replace(/(\r\n|\r|\n)/g, '<br>');
+  
+    displayResult.innerHTML = `<div  class="search-result col-md-8 mx-auto py-4">
+                <div class="single-result row align-items-center my-3 p-3">
+                    <div class="col-md-3">
+                    
+                    <img src="${dataCover}" alt="">
+               </div>
+                <div class="col-md-6">
+                    <h3 class="lyrics-name">${dataSongTitle}</h3>
+                    <p class="author lead">Album by <span id="artistName">${dataArtist}</span></p>
+                    <p class="author lead">Album Name: <span id="artistName">${dataAlbum}</span></p>
+                </div>
+                
+                <div class="col-md-3 text-md-right text-center">
+                    
+                </div>
+                </div>
+                </div>
+    <p align=center>${lyrics}</p>`;
+  
+}
     
 </script>
 </body>
