@@ -61,7 +61,7 @@
                 </div>
             </div> -->
             <!-- Single Lyrics -->
-            <div class="single-lyrics text-center">
+            <!-- <div class="single-lyrics text-center">
                 <button class="btn go-back">&lsaquo;</button>
                 <h2 class="text-success mb-4">Pentatonix - Na Na Na</h2>
                 <pre class="lyric text-white">
@@ -159,7 +159,7 @@
 
     Gonna feel like! (Na na na...)
                 </pre>
-            </div>
+            </div> -->
             <div>
             <!-- === Fancy results === -->
             <div id="displayResult" class="search-result  mx-auto ">
@@ -196,9 +196,11 @@
     let searchResults = document.getElementById("searchResults")
     let searchBtn = document.getElementById("searchBtn")
 
+    const apiUrl = `https://api.lyrics.ovh/suggest`
+
     
     searchBtn.addEventListener("click", function(){
-        fetch(`https://api.lyrics.ovh/suggest/${inputSong.value}`)
+        fetch(`${apiUrl}/${inputSong.value}`)
         .then(res => res.json())
         .then(data =>{
             var list = [];
@@ -250,6 +252,7 @@
 
         
     })
+    
     
 </script>
 </body>
