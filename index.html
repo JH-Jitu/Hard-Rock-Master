@@ -207,7 +207,15 @@
                     var songName = element.title;
                 // console.log(artistName)
                     list.push(artistName)
-                let displayResult = document.getElementById('displayResult')
+                
+            }
+        
+        console.log(list)
+    
+        let displayResult = document.getElementById('displayResult')
+        for (let i = 0; i < 10; i++) {
+            var artistName = list[i];
+            let displayResult = document.getElementById('displayResult')
                 displayResult.style.display = "block"
                 document.getElementById("displayResult").innerHTML += 
                 `<div  class="search-result col-md-8 mx-auto py-4">
@@ -221,14 +229,7 @@
                 </div>
                 </div>
                 </div>`
-        // }  
-            }
-        
-        console.log(list)
-    
-        // let displayResult = document.getElementById('displayResult')
-        // for (let i = 0; i < 5; i++) {
-        //     var artistName = list[i];
+        }  
             
           
         })
